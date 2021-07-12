@@ -11,7 +11,14 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/books', async (req, res) => {
-    const books = await BookModel.find();
+    const queryParams = req.query;
+    let books;
+    if (queryParams.price) {
+        books = await BookModel.find({ price: parseInt(queryParams.price)}).exec();
+    } else {
+        books = await BookModel.find();
+    }
+
     res.status(200).send(books.map(({id, title}) => ({id, title})));
 });
 
