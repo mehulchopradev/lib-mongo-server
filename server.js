@@ -19,12 +19,21 @@ app.get('/books', async (req, res) => {
         books = await BookModel.find();
     }
 
-    res.status(200).send(books.map(({id, title}) => ({id, title})));
+    setTimeout(() => {
+        res.status(200).send(books.map(({id, title}) => ({id, title})));
+    }, 3000);
 });
 
 app.get('/books/:book_id', async (req, res) => {
     const book = await BookModel.findById(req.params.book_id);
-    res.status(200).send(book);
+    setTimeout(() => {
+        res.status(200).send({
+            id: book.id,
+            price: book.price,
+            title: book.title,
+            pages: book.pages,
+        });
+    }, 3000);
 });
 
 app.put('/books/:book_id', async (req, res) => {
