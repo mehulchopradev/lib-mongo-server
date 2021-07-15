@@ -44,7 +44,12 @@ app.put('/books/:book_id', async (req, res) => {
 app.post('/books', async (req, res) => {
     const book = req.body;
     const newbook = await BookModel.create(book);
-    res.status(201).send(newbook);
+    res.status(201).send({
+        id: newbook.id,
+        price: newbook.price,
+        title: newbook.title,
+        pages: newbook.pages,
+    });
 });
 
 app.listen(PORT, () => {
